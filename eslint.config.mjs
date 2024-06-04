@@ -1,31 +1,40 @@
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+// eslint.config.mjs
+import { defineConfig } from 'eslint-define-config';
 
-
-export default [
-  {languageOptions: { globals: globals.browser }},
-  ...tseslint.configs.recommended,
-  pluginReactConfig,
-
-  {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaVersion": 12,
-      "sourceType": "module",
+export default defineConfig({
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    "plugins": ["@typescript-eslint"],
-    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
-  
-    "rules": {
-      "@typescript-eslint/no-unused-vars": "error",
-      // to enforce using type for object type definitions, can be type or interface 
-      "@typescript-eslint/consistent-type-definitions": ["error", "type"], 
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  plugins: [
+    'react',
+    '@typescript-eslint',
+  ],
+  rules: {
+    'indent': ['error', 2],
+    'linebreak-style': ['error', 'unix'],
+    'quotes': ['error', 'single'],
+    'semi': ['error', 'always'],
+    '@typescript-eslint/no-unused-vars': ['error'],
+    'react/prop-types': 'off',
+  },
+  settings: {
+    react: {
+      version: 'detect',
     },
-  
-    "env": {
-      "browser": true,
-      "es2021": true
-    }
-  }
-];
+  },
+});
