@@ -7,7 +7,7 @@ const queue = "product_inventory";
   let channel: Channel | null = null;
 
   try {
-    connection = await amqp.connect("amqp://localhost");
+    connection = await amqp.connect("amqp://guest:guest@localhost:5673");
     channel = await connection.createChannel();
 
     process.once("SIGINT", async () => {

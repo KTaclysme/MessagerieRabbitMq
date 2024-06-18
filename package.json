@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/index.ts",
+    "start": "node src/back/index.ts",
     "dev": "nodemon src/back/index.ts",
     "lint": "eslint --config eslint.config.mjs .",
     "lint:fix": "eslint --config eslint.config.mjs --fix ."
