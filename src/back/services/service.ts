@@ -1,44 +1,39 @@
-import * as amqp from 'amqplib';
+// src/services/rabbitmqService.ts
+import amqp from 'amqplib';
 
-const QUEUE_NAME = 'messages';
+const RABBITMQ_URL = 'amqp://localhost';
 
-export const sendMessage = async (content: string) => {
-    try {
-        const connection = await amqp.connect('amqp://localhost');
-        const channel = await connection.createChannel();
-        channel.sendToQueue(QUEUE_NAME, Buffer.from(content));
-        setTimeout(() => {
-            connection.close();
-        }, 500);
-    } catch (error) {
-        throw new Error('Failed to send message');
-    }
+let channel: amqp.Channel;
+
+export const connectRabbitMQ = async () => {
+  try {
+    const connection = await amqp.connect(RABBITMQ_URL);
+    channel = await connection.createChannel();
+    await channel.assertQueue('messages', { durable: false });
+  } catch (error) {
+    console.error('Failed to connect to RabbitMQ', error);
+    process.exit(1);
+  }
 };
 
-export const receiveMessages = async () => {
-    try {
-        const connection = await amqp.connect('amqp://localhost');
-        const channel = await connection.createChannel();
-        
-        const messages: string[] = [];
+export const sendMessage = (message: string) => {
+  if (channel) {
+    channel.sendToQueue('messages', Buffer.from(message));
+  } else {
+    console.error('Channel is not initialized');
+  }
+};
 
-        await new Promise<void>((resolve) => {
-            channel.consume(QUEUE_NAME, (msg) => {
-                if (msg !== null) {
-                    messages.push(msg.content.toString());
-                    channel.ack(msg);
-                } else {
-                    resolve();
-                }
-            });
-        });
-
-        setTimeout(() => {
-            connection.close();
-        }, 500);
-
-        return messages;
-    } catch (error) {
-        throw new Error('Failed to receive messages');
+export const receiveMessage = async (): Promise<string | null> => {
+  if (channel) {
+    const msg = await channel.get('messages', { noAck: false });
+    if (msg) {
+      channel.ack(msg);
+      return msg.content.toString();
     }
+    return null;
+  } else {
+    console.error('Channel is not initialized');
+    return null;
+  }
 };
