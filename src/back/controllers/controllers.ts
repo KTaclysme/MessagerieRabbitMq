@@ -19,3 +19,4 @@ export const receiveMessages = async (req: Request, res: Response) => {
         res.status(500).send({ error: 'Failed to retrieve messages' });
     }
 };
+ 

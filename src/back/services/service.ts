@@ -6,7 +6,6 @@ export const sendMessage = async (content: string) => {
     try {
         const connection = await amqp.connect('amqp://localhost');
         const channel = await connection.createChannel();
-        await channel.assertQueue(QUEUE_NAME, { durable: false });
         channel.sendToQueue(QUEUE_NAME, Buffer.from(content));
         setTimeout(() => {
             connection.close();
@@ -20,7 +19,6 @@ export const receiveMessages = async () => {
     try {
         const connection = await amqp.connect('amqp://localhost');
         const channel = await connection.createChannel();
-        await channel.assertQueue(QUEUE_NAME, { durable: false });
         
         const messages: string[] = [];
 

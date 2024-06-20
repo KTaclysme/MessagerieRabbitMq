@@ -3,7 +3,7 @@ import * as messageController from '../controllers/controllers';
 
 const router = Router();
 
-router.post('/send', messageController.sendMessage);
-router.get('/receive', messageController.receiveMessages);
+router.post('/se', messageController.sendMessage);
+router.get('/re', messageController.receiveMessages);
 
 export default router;
