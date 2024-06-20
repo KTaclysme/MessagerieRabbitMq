@@ -14,7 +14,6 @@ const text = {
     connection = await amqp.connect("amqp://guest:guest@localhost:5672");
     channel = await connection.createChannel();
 
-    await channel.assertQueue(queue, { durable: false });
     channel.sendToQueue(queue, Buffer.from(JSON.stringify(text)));
     console.log(" [x] Sent '%s'", JSON.stringify(text));
     
