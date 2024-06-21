@@ -20,12 +20,14 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "ts node dist/back/server.js",
-    "dev:all": "npm run dev npm run dev:producer npm run dev:consumer",
+    "start": "ts-node dist/back/server.js",
     "dev": "nodemon --exec ts-node src/back/server.ts",
-    "dev:producer": "nodemon --exec ts-node src/back/producer.ts",
-    "dev:consumer": "nodemon --exec ts-node src/back/consumer.ts",
     "lint": "eslint --config eslint.config.mjs .",
-    "lint:fix": "eslint --config eslint.config.mjs --fix ."
+    "lint:fix": "eslint --config eslint.config.mjs --fix .",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:restart": "docker-compose down && docker-compose up -d",
+    "start:docker": "npm run docker:up && npm start",
+    "dev:docker": "npm run docker:up && npm run dev"
   }
 }
