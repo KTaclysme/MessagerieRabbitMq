@@ -1,4 +1,4 @@
-// src/services/rabbitmqService.ts
+
 import amqp from 'amqplib';
 
 const RABBITMQ_URL = 'amqp://localhost';
@@ -10,6 +10,7 @@ export const connectRabbitMQ = async () => {
     const connection = await amqp.connect(RABBITMQ_URL);
     channel = await connection.createChannel();
     await channel.assertQueue('messages', { durable: false });
+    console.log("RabbitMQ connected")
   } catch (error) {
     console.error('Failed to connect to RabbitMQ', error);
     process.exit(1);
