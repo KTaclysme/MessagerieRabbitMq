@@ -1,4 +1,6 @@
-# RabbitMQ TypeScript Node.js Project
+# RabbitMQ TypeScript Node.js 
+
+## Project, groupe : Kevin TA, Valentin ROYER, Arthur CHAMBRIN 
 
 ## Table of Contents
 - [Introduction](#introduction)
