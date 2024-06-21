@@ -5,7 +5,7 @@ import { sendMessage, receiveMessage } from '../services/service';
 export const sendMessageController = (req: Request, res: Response) => {
   const message = req.body.message;
   sendMessage(message);
-  res.send('Message sent');
+  res.send(`Message sent: "${message}"`);
 };
 
 export const receiveMessageController = async (req: Request, res: Response) => {
