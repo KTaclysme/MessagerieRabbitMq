@@ -1,3 +1,4 @@
+
 import amqp from 'amqplib';
 
 const RABBITMQ_URL = 'amqp://localhost';

@@ -1,3 +1,4 @@
+// src/controllers/messageController.ts
 import { Request, Response } from 'express';
 import { sendMessage, receiveMessage } from '../services/service';
 
