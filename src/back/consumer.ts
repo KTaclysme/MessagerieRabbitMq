@@ -16,7 +16,6 @@ const queue = "product_inventory";
       process.exit(0);
     });
 
-    await channel.assertQueue(queue, { durable: false });
     await channel.consume(
       queue,
       (message: ConsumeMessage | null) => {

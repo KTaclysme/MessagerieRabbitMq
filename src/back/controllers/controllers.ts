@@ -1,21 +1,18 @@
+// src/controllers/messageController.ts
 import { Request, Response } from 'express';
-import * as messageService from '../services/service';
+import { sendMessage, receiveMessage } from '../services/service';
 
-export const sendMessage = async (req: Request, res: Response) => {
-    try {
-        const { content } = req.body;
-        await messageService.sendMessage(content);
-        res.status(200).send({ message: 'Message sent successfully' });
-    } catch (error) {
-        res.status(500).send({ error: 'Failed to send message' });
-    }
+export const sendMessageController = (req: Request, res: Response) => {
+  const message = req.body.message;
+  sendMessage(message);
+  res.send('Message sent');
 };
 
-export const receiveMessages = async (req: Request, res: Response) => {
-    try {
-        const messages = await messageService.receiveMessages();
-        res.status(200).send(messages);
-    } catch (error) {
-        res.status(500).send({ error: 'Failed to retrieve messages' });
-    }
+export const receiveMessageController = async (req: Request, res: Response) => {
+  const message = await receiveMessage();
+  if (message) {
+    res.send(message);
+  } else {
+    res.send('No messages');
+  }
 };
